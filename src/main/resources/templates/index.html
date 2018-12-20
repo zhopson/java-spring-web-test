@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Spring Boot Mustache</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            table, td, th {
+                border: 1px solid #999;
+                padding: 5px;
+            }
+        </style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">        
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></head>-->
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Заметки</h1>
+                <hr class="my-4">
+                <p><a class="btn btn-success btn-lg" href="extindex" role="button">Другая версия</a></p>
+            </div>    
+            <!--    <h2>Заметки</h2>
+                <h4><a href="new">Создать Заметку</a></h4>-->
+            <p><a class="btn btn-primary btn-lg" href="new" role="button">Создать Заметку</a></p>
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Сообщение</th>
+                    <th>Дата <a href="sort/DESC"> \/ </a><a href="sort/ASC"> /\ </a></th>
+                    <th>Сделано</th>
+                    <th>Редактировать</th>
+                    <th>Удалить</th>
+                </tr>
+                {{ #notes }}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{message}}</td>
+                    <td>{{date}}</td>
+                    <td>{{done}}</td>
+                    <td><a href="edit/{{id}}">Редактировать Заметку</a></td>
+                    <td><a href="delete/{{id}}">Удалить Заметку</a></td>
+                </tr>
+                {{/notes}}
+
+            </table>
+        </div>
+    </body>
+</html>

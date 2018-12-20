@@ -1,1 +1,2 @@
-#my test traning project java-spring-web-test
+#my test training project java-spring-web-test
+for testing databases, security, ...

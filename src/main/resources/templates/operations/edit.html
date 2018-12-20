@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Spring Boot Изменить Заметку</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">        
+    </head>
+    <body>
+        <div class="container">
+        <div class="jumbotron">
+            <h1>Заметки</h1>
+            <!--  <p><a class="btn btn-primary btn-lg" href="new" role="button">Создать Заметку</a></p>-->
+        </div>    
+
+                <h2>Изменить Заметку</h2>
+        <form action="/update" method="POST">
+            <hr size="1">
+            <input type="hidden" id="id" name="id" value="{{id}}"/>
+            <div class="form-group">
+                <label for="edit_msg">Сообщение</label>
+                <input  class="form-control" type="text" name="edit_msg" id="edit_msg" value="{{note.message}}" />
+            </div>
+            <div class="form-group">
+                <label for="edit_dt">Дата</label>
+                <input  class="form-control" type="text" name="edit_dt" id="edit_dt" value="{{note.date}}" />
+            </div>
+            <div class="form-group form-check">
+                {{#note.done}}
+                <input type="checkbox" class="form-check-input" name="edit_done" id="edit_done" checked>
+                {{/note.done}}
+                {{^note.done}}
+                <input type="checkbox" class="form-check-input" name="edit_done" id="edit_done" >
+                {{/note.done}}
+                <label class="form-check-label" for="edit_done">Сделано</label>
+
+            </div>
+            <hr size="1">
+            <input type="submit" class="btn btn-primary" value="Сохранить" />
+            <hr size="2">
+        </form>
+        <h4><a href="/">Вернуться</a></h4>
+        </div>
+    </body>
+</html>

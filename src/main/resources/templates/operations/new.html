@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Spring Boot Новая Заметка</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">        
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Заметки</h1>
+                <!--  <p><a class="btn btn-primary btn-lg" href="new" role="button">Создать Заметку</a></p>-->
+            </div>    
+            <h2>Новая Заметка</h2>
+
+            <!--        <h2>Новая Заметка</h2>-->
+            <form action="save" method="POST">
+                <hr size="1">
+                <div>
+                    <label>Сообщение</label>
+                    <input type="text" name="new_msg" value="" />
+                </div>
+                <!--            <div>
+                                <label>Сделано</label>
+                                <input type="checkbox" name="new_done" value="" />
+                            </div>-->
+                <hr size="1">
+                <input class="btn btn-primary" type="submit" value="Сохранить" />
+                <hr size="2">
+            </form>
+            <h4><a href="/">Вернуться</a></h4>
+        </div>
+    </body>
+</html>
