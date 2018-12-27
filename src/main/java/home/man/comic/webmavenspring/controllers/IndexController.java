@@ -7,10 +7,13 @@ package home.man.comic.webmavenspring.controllers;
 
 import home.man.comic.webmavenspring.entity.Note;
 import home.man.comic.webmavenspring.service.NoteService;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import utils.WebUtils;
 
 /**
  *
@@ -52,16 +56,47 @@ public class IndexController {
 //
 //        return "index";
 //    }
-    @GetMapping("/")
-    public String list(Model model) {
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String welcome(Model model/*, Principal principal*/) {
+//       if (principal != null) {
+//            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+// 
+//            String userInfo = WebUtils.toString(loginedUser);
+// 
+//            model.addAttribute("userInfo", userInfo);
+// 
+//            model.addAttribute("username", principal.getName());
+// 
+//        }        
+        return "welcome";
+    }
+    
+    
+    @GetMapping("/index")
+    public String list(Model model, Principal principal) {
         List<Note> notebook = filterAndSort();
         model.addAttribute("notes", notebook);
         model.addAttribute("sort", sortDateMethod);
+        
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+//        String userInfo = WebUtils.toString(loginedUser);
+//        model.addAttribute("userInfo", userInfo);        
+        model.addAttribute("username", principal.getName());
+        
         return "index";
     }
 
     @GetMapping("/extindex")
-    public String extlist() {
+    public String extlist(Model model, Principal principal) {
+
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+        model.addAttribute("username", principal.getName());
+//        String userInfo = WebUtils.toString(loginedUser);
+//        model.addAttribute("userInfo", userInfo);        
+        
         return "extindex";
     }
 
@@ -82,7 +117,7 @@ public class IndexController {
     @GetMapping("/sort/{sortDate}")
     public String sortChoose(@PathVariable String sortDate) {
         sortDateMethod = sortDate;
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     private List<Note> filterAndSort() {
@@ -97,5 +132,67 @@ public class IndexController {
         }
         return notebook;
     }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage(Model model) {
+ 
+        return "loginPage";
+    }
+ 
+    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
+    public String logoutSuccessfulPage() {
+        return "welcome";
+    }
+    
+//    @RequestMapping(value = "/header", method = RequestMethod.GET)
+//    public String header(Model model, Principal principal) {
+// 
+//        // After user login successfully.
+//        String userName = principal.getName();  
+// 
+//        System.out.println("User Name from header: " + userName);
+// 
+//        model.addAttribute("username", userName);
+// 
+//        return "header";
+//    }
+    
+
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public String userInfo(Model model, Principal principal) {
+ 
+        // After user login successfully.
+        String userName = principal.getName();  
+ 
+        System.out.println("User Name: " + userName);
+ 
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+        String userInfo = WebUtils.toString(loginedUser);
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("username", userName);
+ 
+        return "userInfoPage";
+    }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+ 
+        if (principal != null) {
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
+            String userInfo = WebUtils.toString(loginedUser);
+ 
+            model.addAttribute("userInfo", userInfo);
+            model.addAttribute("username", principal.getName());
+ 
+            String message = "Hi " + principal.getName() //
+                    + "<br> You do not have permission to access this page!";
+            model.addAttribute("message", message);
+ 
+        }
+ 
+        return "403Page";
+    }    
 
 }

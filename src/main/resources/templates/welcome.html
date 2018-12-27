@@ -1,0 +1,14 @@
+{{> header}}
+            <div class="alert alert-info" role="alert">
+                {{#request.userPrincipal}}
+                    Добро пожаловать, {{request.userPrincipal.getName()}}!
+                {{/request.userPrincipal}}
+                {{^request.userPrincipal}}
+                    Добро пожаловать!
+                {{/request.userPrincipal}}
+
+            </div>            
+
+        </div>
+    </body>
+</html>

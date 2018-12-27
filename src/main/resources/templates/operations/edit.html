@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <title>Spring Boot Изменить Заметку</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">        
-    </head>
-    <body>
-        <div class="container">
-        <div class="jumbotron">
-            <h1>Заметки</h1>
-            <!--  <p><a class="btn btn-primary btn-lg" href="new" role="button">Создать Заметку</a></p>-->
-        </div>    
+{{> header}}   
 
                 <h2>Изменить Заметку</h2>
         <form action="/update" method="POST">
@@ -40,5 +28,16 @@
         </form>
         <h4><a href="/">Вернуться</a></h4>
         </div>
+<script type="text/javascript">
+    window.onload = function () {
+        var user = '{{username}}';
+        //if (user!=='') $('#id_user').html(user);
+        //alert(user);
+        if (user!=='') {
+            $('#id_user_block').css('display', 'inline');
+            $('#id_username').html(user+ ' <a href="/logout" class="badge badge-info">Выйти</a>');
+        }
+    };
+</script>            
     </body>
 </html>

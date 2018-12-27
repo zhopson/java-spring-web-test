@@ -1,0 +1,33 @@
+{{> header}}
+
+            <div class="alert alert-info" role="alert">
+                {{#message}}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>                
+                {{/message}}
+
+                {{#userInfo}}
+                <div class="alert alert-danger" role="alert">
+                    {{userInfo}}
+                </div>                
+                {{/userInfo}}
+
+            </div>            
+
+        </div>
+<script type="text/javascript">
+    window.onload = function () {
+        var user = '{{username}}';
+        //if (user!=='') $('#id_user').html(user);
+        //alert(user);
+        if (user!=='') {
+            $('#id_user_block').css('display', 'inline');
+            $('#id_username').html(user+ ' <a href="/logout" class="badge badge-info">Выйти</a>');
+        }
+    };
+</script>            
+    </body>
+</html>
+
+

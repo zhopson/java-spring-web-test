@@ -1,0 +1,36 @@
+{{> header}}  
+            <!--    <h2>Заметки</h2>
+                <h4><a href="new">Создать Заметку</a></h4>-->
+
+            <div class="alert alert-info" role="alert">
+                <h2>Профиль пользователя</h2>
+                <h3>Защищенная страница!</h3>
+                <ul class="list-group">
+                    <li class="list-group-item active">Логин</li>
+                    <li class="list-group-item">{{username}}</li>
+                    <li class="list-group-item active">Реквизиты</li>
+                    <li class="list-group-item">
+                        {{#userInfo}}
+                            {{userInfo}}
+                        {{/userInfo}}
+                    </li>
+                </ul>                
+
+            </div>            
+
+        </div>
+<script type="text/javascript">
+    window.onload = function () {
+        var user = '{{username}}';
+        //if (user!=='') $('#id_user').html(user);
+        //alert(user);
+        if (user!=='') {
+            $('#id_user_block').css('display', 'inline');
+            $('#id_username').html(user+ ' <a href="/logout" class="badge badge-info">Выйти</a>');
+        }
+    };
+</script>    
+        
+    </body>
+</html>
+
