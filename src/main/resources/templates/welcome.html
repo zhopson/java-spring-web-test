@@ -1,14 +1,24 @@
 {{> header}}
             <div class="alert alert-info" role="alert">
-                {{#request.userPrincipal}}
-                    Добро пожаловать, {{request.userPrincipal.getName()}}!
-                {{/request.userPrincipal}}
-                {{^request.userPrincipal}}
-                    Добро пожаловать!
-                {{/request.userPrincipal}}
+                Добро пожаловать
+                <div id="id_username_block" style="display:none" ><h3 id="id_usrname"></h3></div>
 
             </div>            
 
         </div>
+<script type="text/javascript">
+    window.onload = function () {
+        var user='';
+        {{#username}}
+        user = '{{username}}';
+        {{/username}}
+        //if (user!=='') $('#id_user').html(user);
+        //alert(user);
+        if (user!=='') {
+            $('#id_username_block').css('display', 'inline');
+            $('#id_usrname').html(', '+user);
+        }
+    };
+</script>         
     </body>
 </html>

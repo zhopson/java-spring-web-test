@@ -1,0 +1,40 @@
+# version docker-compose
+version: '3.1'
+services:
+
+    app:
+        container_name: app-springboot-postgresql
+        image: app-springboot-postgresql
+#        command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; echo 1'
+        build: ./
+        # ports
+        ports:
+            - "8080:8080"
+        # mount dirs, left - host machine, right - in container
+#        volumes:
+#            - ./target:/tmp
+        depends_on:
+             - dbpostgresql
+#                 condition: service_healthy
+        links:
+            - dbpostgresql
+
+    dbpostgresql:
+        image: postgres
+        ports:
+            - "5433:5432"
+        # montiruem direktoriyu s proektami
+        volumes:
+            - ./postgres:/var/lib/postgresql/data
+            - ./db-init:/docker-entrypoint-initdb.d
+        environment:
+            - POSTGRES_PASSWORD=123qwe
+            - POSTGRES_USER=ruser
+            - POSTGRES_DB=services
+            - PGDATA=/var/lib/postgresql/data/pgdata
+#        healthcheck:
+#            test: ["CMD-SHELL", "pg_isready -U postgres"]
+#            interval: 10s
+#            timeout: 5s
+#            retries: 5
+
