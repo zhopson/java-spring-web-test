@@ -1,36 +1,114 @@
 {{> header}}  
-            <!--    <h2>Заметки</h2>
-                <h4><a href="new">Создать Заметку</a></h4>-->
+<!--    <h2>Заметки</h2>
+    <h4><a href="new">Создать Заметку</a></h4>-->
 
-            <div class="alert alert-info" role="alert">
-                <h2>Профиль пользователя</h2>
-                <h3>Защищенная страница!</h3>
-                <ul class="list-group">
-                    <li class="list-group-item active">Логин</li>
-                    <li class="list-group-item">{{username}}</li>
-                    <li class="list-group-item active">Реквизиты</li>
-                    <li class="list-group-item">
-                        {{#userInfo}}
-                            {{userInfo}}
-                        {{/userInfo}}
-                    </li>
-                </ul>                
-
-            </div>            
+<div class="alert alert-info" role="alert">
+    <h2 style="margin:15px 0 0 0">Профиль пользователя</h2>
+    <h3 style="margin:20px 0 0 0">Защищенная страница!</h3>
+    <div class="container" style="margin:20px 0 0 0">
+        <div class="col-6">
+            <ul class="list-group">
+                <li class="list-group-item active">Логин</li>
+                <li class="list-group-item">{{username}}</li>
+            </ul>
 
         </div>
+    </div>
+
+    <div class="container" style="margin:15px 0 0 0">
+        <div class="col-6">
+            <ul class="list-group">
+                <li class="list-group-item active">Роли</li>
+                <li class="list-group-item">
+                    <!--                            <table class="table">-->
+                    <ul>
+                        {{# userRoles }}
+                        <!--                                <tr>
+                                                            <td>-->
+                        <li>{{ . }}</li>
+                        <!--                                    </td>
+                                                        </tr>-->
+                        {{/ userRoles }}                                    
+                    </ul>                                
+                    <!--                            </table>-->
+
+                    <!--                    {{#userInfo}}
+                                        {{userInfo}}
+                                        {{/userInfo}}-->
+                </li>
+            </ul>                
+        </div>
+    </div>
+    <div class="container" style="margin:15px 0 0 0">
+        <div class="col-6">
+            <ul class="list-group">
+                <li class="list-group-item active">Заполнение базы</li>
+                <li class="list-group-item">
+                    <button type="button" id="id_fill_base" class="btn btn-warning float-right">Заполнить базу тестовыми данными</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>    
+
+
+</div>            
+{{> footer}} 
+</div> <!-- parent container -->
 <script type="text/javascript">
+    function HideMsg() {
+        $("#id_fill_base").removeClass("btn-success btn-danger").addClass("btn-warning");
+        $("#id_fill_base").html('Заполнить базу тестовыми данными');
+        $("#id_fill_base").attr('disabled', false);
+        //$(".alert").css('display', 'none');  
+    }
+
     window.onload = function () {
         var user = '{{username}}';
         //if (user!=='') $('#id_user').html(user);
         //alert(user);
-        if (user!=='') {
+        if (user !== '') {
             $('#id_user_block').css('display', 'inline');
-            $('#id_username').html(user+ ' <a href="/logout" class="badge badge-info">Выйти</a>');
+            $('#id_username').html(user + ' <a href="/logout" class="badge badge-info">Выйти</a>');
         }
     };
+    $(document).ready(function () {
+        $('#id_fill_base').click(function () {
+            //alert('id_fill_base');
+            $.ajax({
+                url: "/fill_fake_data",
+                //context: document.body,
+                success: function (result) {
+//                    if (result.status === 1) {
+                    if (result === 'ОК') {
+                        $("#id_fill_base").removeClass("btn-warning btn-danger").addClass("btn-success");
+                        $("#id_fill_base").html('Заполнение произведено успешно');
+                        $("#id_fill_base").attr('disabled', true);
+                        setTimeout(HideMsg, 10000);
+                    } else {
+                        $("#id_fill_base").removeClass("btn-warning btn-success").addClass("btn-danger");
+                        $("#id_fill_base").html('Ошибка при заполнении БД');
+                        $("#id_fill_base").attr('disabled', true);
+                        setTimeout(HideMsg, 10000);
+                    }
+                    //$(this).addClass("done");
+                    //$('#id_error_file_panel').css('display', 'inline');
+                },
+                error: function (result) {
+                    $("#id_fill_base").removeClass("btn-warning btn-success").addClass("btn-danger");
+                    $("#id_fill_base").html('Ошибка асинхронного запроса');
+                    $("#id_fill_base").attr('disabled', true);
+                    setTimeout(HideMsg, 10000);
+                }
+
+            });
+
+
+        });
+
+    });
 </script>    
-        
-    </body>
+
+</body>
 </html>
 

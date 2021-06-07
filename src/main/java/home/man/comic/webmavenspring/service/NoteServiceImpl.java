@@ -10,6 +10,7 @@ import home.man.comic.webmavenspring.repository.NoteRepository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,5 +111,41 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<Note> findAllByOrderByDateDesc() {
         return repository.findAllByOrderByDateDesc();
+    }
+
+    @Override
+    public String fillFakeData(){
+
+        List <String> fakeNotes = new ArrayList(Arrays.asList(
+  "Администрирование Active directory"
+, "Администрирование Эл. Почты"
+, "Техподдержка пользователей"
+, "Администрирование ЛВС"
+, "Настройка, администрирование ИТ оборудования"
+, "Закупка оборудования, Работа со счетами"
+, "Администрирование, обслуживание серверов"
+, "Разработка, сопровождение сайта"
+, "Организация, планирование вкс"
+, "Установка специализированного ПО"
+, "Получение техники со склада в Москве"
+, "Подключение сетевых дисков"
+, "Организация подключения по локальной сети"
+, "Установка, настройка принтеров"
+, "Резервное копирование данных с сервера"
+, "Настройка ПК"
+, "Заведение новых доменных пользователей"
+, "Создание отчетов по оборудованию"
+, "Инвентаризация оборудования"
+, "Проверка достижимости узла"
+        ));        
+
+        for (String fnote : fakeNotes) {
+            Note note = new Note(fnote);
+            repository.save(note);
+        }
+
+//        Note note;
+//        repository.save(note);
+        return "ОК";
     }
 }

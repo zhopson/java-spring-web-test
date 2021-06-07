@@ -8,8 +8,7 @@ package home.man.comic.webmavenspring.controllers;
 import home.man.comic.webmavenspring.entity.Note;
 import home.man.comic.webmavenspring.service.NoteService;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -58,17 +57,18 @@ public class IndexController {
 //    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String welcome(Model model/*, Principal principal*/) {
-//       if (principal != null) {
-//            User loginedUser = (User) ((Authentication) principal).getPrincipal();
-// 
+    public String welcome(Model model, Principal principal) {
+       if (principal != null) {
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+ 
 //            String userInfo = WebUtils.toString(loginedUser);
-// 
+ 
 //            model.addAttribute("userInfo", userInfo);
-// 
-//            model.addAttribute("username", principal.getName());
-// 
-//        }        
+ 
+            model.addAttribute("username", principal.getName());
+ 
+        }
+        else model.addAttribute("username", "none");
         return "welcome";
     }
     
@@ -168,8 +168,12 @@ public class IndexController {
  
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
  
-        String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userInfo", userInfo);
+//        String userInfo = WebUtils.toString(loginedUser);
+//        model.addAttribute("userInfo", userInfo);
+//        model.addAttribute("username", userName);
+
+        ArrayList<String> userRoles = WebUtils.GetRoles(loginedUser);
+        model.addAttribute("userRoles", userRoles);
         model.addAttribute("username", userName);
  
         return "userInfoPage";
@@ -186,13 +190,21 @@ public class IndexController {
             model.addAttribute("userInfo", userInfo);
             model.addAttribute("username", principal.getName());
  
-            String message = "Hi " + principal.getName() //
-                    + "<br> You do not have permission to access this page!";
+            String message = "Привет " + principal.getName() //
+                    + ",\n У вас нет разрешений на доступ к странице!";
             model.addAttribute("message", message);
  
         }
  
         return "403Page";
     }    
+
+    @RequestMapping(value = "/fill_fake_data", method = RequestMethod.GET)
+    @ResponseBody
+    public String fillFakeData() {
+
+        //return service.findAll();
+        return service.fillFakeData();
+    }
 
 }

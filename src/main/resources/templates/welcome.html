@@ -4,19 +4,27 @@
                 <div id="id_username_block" style="display:none" ><h3 id="id_usrname"></h3></div>
 
             </div>            
-
-        </div>
+{{> footer}}  
+        </div> <!-- parent container -->
 <script type="text/javascript">
     window.onload = function () {
-        var user='';
-        {{#username}}
-        user = '{{username}}';
-        {{/username}}
+        //var user='';
+        //{{#username}}
+        var user = '{{username}}';
+        //{{/username}}
         //if (user!=='') $('#id_user').html(user);
         //alert(user);
-        if (user!=='') {
+        if (user!=='none') {
             $('#id_username_block').css('display', 'inline');
-            $('#id_usrname').html(', '+user);
+            $('#id_usrname').html(user);
+            
+            $('#id_user_block').css('display', 'inline');
+            $('#id_username').html(user+ ' <a href="/logout" class="badge badge-info">Выйти</a>');            
+            $('#id_login_block').css('display', 'none');
+        }
+        else {
+            $('#id_user_block').css('display', 'none');
+            $('#id_login_block').css('display', 'inline');
         }
     };
 </script>         

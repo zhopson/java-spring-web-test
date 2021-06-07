@@ -30,4 +30,6 @@ public interface NoteService {
     List<Note> findAllByOrderByDateAsc();
 
     List<Note> findAllByOrderByDateDesc();
+
+    String fillFakeData();
 }

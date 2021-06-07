@@ -14,6 +14,7 @@ import java.util.Collection;
  
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import java.util.*;
 
 public class WebUtils {
     public static String toString(User user) {
@@ -37,4 +38,19 @@ public class WebUtils {
         }
         return sb.toString();
     }    
+
+    public static ArrayList<String> GetRoles(User user) {
+
+        ArrayList<String> roles = new ArrayList<String>();
+ 
+        Collection<GrantedAuthority> authorities = user.getAuthorities();
+        if (authorities != null && !authorities.isEmpty()) {
+            for (GrantedAuthority a : authorities) {
+                  roles.add(a.getAuthority());
+            }
+        }
+        return roles;
+    }    
+
+
 }
